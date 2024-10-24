@@ -44,29 +44,13 @@ def write_manager(freq_aud, recording):
     except Exception as e:
         raise RuntimeError(f"Writing audio failed: {e}\n")
 
-def transcribe_manager():
-    try:
-        filename = "recordings/recording.wav"
-        model_path = "/home/csrobot/vosktest/models/vosk-model-en-us-0.22"
-        print("INFO: Transcribing audio file now")
-        transcriber = v.Transcriber(model_path)
-        transcription = transcriber.transcribe(filename)
-        print("INFO: Transcription: ", transcription)
-        print("INFO: Writing transcription to results/test.txt now")
-        filesrc = f"./results/test.txt"
-        with open(filesrc, "w") as tf:
-            for i in transcription:
-                tf.write(i+'\n')
-    except Exception as e:
-        raise RuntimeError("ERROR: Error while transcribing the recording")
-    
 def main():
     # Frequency of audio
     freq_aud = 44100
     duration = 0
     while True:
         print("R: 5 Seconds")
-        print("T: 10 Seconds")
+        print("T: 10 Seconds") 
         print("Y: 20 Seconds")
         print("Z: Exit Program")
         duration = input("Enter Key: ")
@@ -83,7 +67,6 @@ def main():
             raise RuntimeError(f"Finding {fd.DEVICE_NAME} failed: {e}\n")
         recording = record_manager(freq_aud, duration)
         write_manager(freq_aud, recording)
-        transcribe_manager()
 
 if __name__ == "__main__":
     main()
